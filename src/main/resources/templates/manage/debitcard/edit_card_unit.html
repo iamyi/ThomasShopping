@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="style/manage_style">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bank Management System | Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script src="/dist/js/plugins/jquery/jquery.min.js"></script>
+    <script src="/dist/js/adminlte.min.js"></script>
+    <script src="/dist/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body class="hold-transition">
+<div class="wrapper">
+    <div th:include="style/manage_style::content">
+    </div>
+    <div class="content-wrapper">
+        <section class="content-header"></section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-md-9">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Edit Debit Card</h3>
+                            </div>
+                            <form th:object="${debitcard}" action="/banksystem/manage/debitcard/submit_edit" method="post">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <a th:id="${debitcard.getAccount()}" onclick="changePSD(this)" class="btn btn-outline-primary">change psd</a>
+                                        <a th:id="${debitcard.getAccount()}" onclick="repLoss(this)" class="btn btn-outline-warning">report loss</a>
+                                        <a th:id="${debitcard.getAccount()}" onclick="cancelRepLoss(this)" class="btn btn-outline-success">cancle rep loss</a>
+                                        <a th:id="${debitcard.getAccount()}" onclick="delAccount(this)" class="btn btn-outline-danger">delete account</a>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="account" class="text-danger">Account</label>
+                                        <input class="form-control" th:field="*{account}" id="account" name="account" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name" class="text-danger">Name</label>
+                                        <input class="form-control" th:field="*{name}" id="name" name="name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone" class="text-danger"> Phone</label>
+                                        <input class="form-control" th:field="*{phone}" type="number" id="phone" name="phone">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address" class="text-danger">Address</label>
+                                        <div id="address" class="row justify-content-center">
+                                            <div class="col-md-4">
+                                                <input th:value="${debitcard.getAddress().get('province')}" id="province" name="province" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input th:value="${debitcard.getAddress().get('city')}" id="city" name="city" class="form-control">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input th:value="${debitcard.getAddress().get('area')}" id="area" name="area" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input th:value="${debitcard.getAddress().get('street')}" class="form-control" name="street" id="street" type="text" placeholder="Street">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="id_card" class="text-danger">Id Card</label>
+                                        <input class="form-control" th:field="*{id_card}" id="id_card" name="id_card" type="text" disabled>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <td><button class="btn btn-primary" type="submit">Submit</button></td>
+                                    <td><a href="/banksystem/manage/debitcard/edit" class="btn btn-primary float-right">Back</a></td>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    function changePSD(obj){
+        var psd=prompt("enter new password:");
+        if(psd!=null)
+            $.ajax({
+            dataType: "text",
+            url: "/banksystem/manage/debitcard/edit/changePSD",
+            type: "post",
+            data: "id="+obj.id+"&psd="+psd,
+            success: function(data){
+            alert(data)
+
+            }
+
+            })
+    }
+    function repLoss(obj){
+        if(confirm("Are you sure to report loss?"))
+            $.ajax({
+            dataType: "text",
+            url: "/banksystem/manage/debitcard/edit/reportLoss",
+            type: "post",
+            data: "id="+obj.id,
+            success: function(data){
+            alert(data)
+
+            }
+
+            })
+    }
+
+    function cancelRepLoss(obj){
+        if(confirm("Are you sure to cancel loss report?"))
+            $.ajax({
+            dataType: "text",
+            url: "/banksystem/manage/debitcard/edit/cancelReportLoss",
+            type: "post",
+            data: "id="+obj.id,
+            success: function(data){
+            alert(data)
+
+            }
+
+            })
+    }
+
+    function delAccount(obj){
+        if(confirm("Are you sure to delete the account?")){
+            $.ajax({
+            dataType: "text",
+            url: "/banksystem/manage/debitcard/edit/deleteAccount",
+            type: "post",
+            data: "id="+obj.id,
+            success: function(data){
+            alert(data);
+
+            }
+
+            })
+            window.location.href='/banksystem/manage/debitcard/edit';
+        }
+    }
+</script>
+</body>
+
+</html>

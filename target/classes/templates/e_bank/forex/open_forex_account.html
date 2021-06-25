@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="style/e_bank_style">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bank System | EBank</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script src="/dist/js/plugins/jquery/jquery.min.js"></script>
+
+    <script src="/dist/js/adminlte.min.js"></script>
+    <script src="/dist/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/dist/js/datatables/jquery.dataTables.js"></script>
+    <script src="/dist/js/datatables/dataTables.bootstrap4.js"></script>
+</head>
+<body class="hold-transition">
+<div class="wrapper">
+    <div th:include="style/e_bank_style::content">
+    </div>
+    <div class="content-wrapper">
+        <section class="content-header">
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="alert alert-success alert-dismissible">
+                            <h5><i class="icon fa fa-check"></i> Alert!</h5>
+                            <p>You have already opened forex service! Enjoy yourself!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+
+</script>
+</body>
+</html>

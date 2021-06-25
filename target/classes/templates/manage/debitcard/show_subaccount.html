@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="style/manage_style">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bank Management System | Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script src="/dist/js/plugins/jquery/jquery.min.js"></script>
+
+    <script src="/dist/js/adminlte.min.js"></script>
+    <script src="/dist/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/dist/js/datatables/jquery.dataTables.js"></script>
+    <script src="/dist/js/datatables/dataTables.bootstrap4.js"></script>
+</head>
+<body class="hold-transition">
+<div class="wrapper">
+    <div th:include="style/manage_style::content">
+    </div>
+    <div class="content-wrapper">
+        <section class="content-header">
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <a href="/banksystem/manage/debitcard/edit" class="btn btn-primary">back</a>
+                        <p></p>
+                        <div class="card">
+                            <div class="card-header no-border">
+                                <p th:text="'SubAccount of Debit Card :'+${account}"  class="card-title"></p>
+                            </div>
+                            <div class="card-body">
+                                <table id="list" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>SubAccount</th>
+                                        <th>Currency</th>
+                                        <th>Amount</th>
+                                        <th>Value Dates</th>
+                                        <th>Deposit Time</th>
+                                        <th>Interest</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="i : ${index}">
+                                        <td th:text="${allSubAccount.get(i).getSub_account()}"></td>
+                                        <td th:text="${currency[i]}"></td>
+                                        <td th:text="${allSubAccount.get(i).getAmount()}"></td>
+                                        <td th:text="${allSubAccount.get(i).getCreate_time().toString().substring(0,10)}"></td>
+                                        <td th:text="${depositTime[i]}"></td>
+                                        <td th:text="${allSubAccount.get(i).getInterest()}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+</html>

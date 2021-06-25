@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="style/e_bank_style">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bank System | EBank</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script src="/dist/js/plugins/jquery/jquery.min.js"></script>
+
+    <script src="/dist/js/adminlte.min.js"></script>
+    <script src="/dist/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/dist/js/datatables/jquery.dataTables.js"></script>
+    <script src="/dist/js/datatables/dataTables.bootstrap4.js"></script>
+</head>
+<body class="hold-transition">
+<div class="wrapper">
+    <div th:include="style/e_bank_style::content">
+    </div>
+    <div class="content-wrapper">
+        <section class="content-header">
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div calss="col-md-4">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h3 class="card-title">Latest Rate</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body ">
+                                <table id="debitcard" class="table table-bordered table-striped">
+                                    <thead class="table">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Rate</th>
+                                        <th>Level</th>
+                                        <th>Update Time</th>
+                                        <th>More</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="i:${index}">
+                                        <td th:text="${type[i]}"></td>
+                                        <td th:text="${rate[i]}"></td>
+                                        <td th:text="${level[i]}"></td>
+                                        <td th:text="${list.get(i).getUpdate_time().toString().substring(0,10)}"></td>
+                                        <td>
+                                            <a th:href="@{'/banksystem/ebank/forex/tofigure/'+${list.get(i).getCurrency()}+'/'+${level[i]}+'/exchange'}" class="text-muted">
+                                                <i class="fa fa-search"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div th:if="${ts}" class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h5><i class="icon fa fa-check"></i> Information!</h5>
+                            <p th:text="${info}"></p>
+                        </div>
+                        <div th:if="${tns}" class="alert alert-warning alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h5><i class="icon fa fa-warning"></i> Information!</h5>
+                            <p th:text="${info}"></p>
+                        </div>
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Exchange</h3>
+                            </div>
+                            <form action="/banksystem/e_bank/forex/exchange" method="post">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="currency" class="text-danger">Currency</label>
+                                        <div id="currency" class="row justify-content-center">
+                                            <div class="col-md-5">
+                                                <select id="sellcurrency" name="sellcurrency" class="form-control">
+                                                    <option>Sell Currency</option>
+                                                    <option>USD</option>
+                                                    <option>HKD</option>
+                                                    <option>JPY</option>
+                                                    <option>EUR</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-ma-2">
+                                                <p> </p>
+                                                &nbsp;&nbsp;To&nbsp;&nbsp;
+                                            </div>
+                                            <div class="col-md-5">
+                                                <select id="buycurrency" name="buycurrency" class="form-control">
+                                                    <option>Buy Currency</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="amount" class="text-danger">Amount</label>
+                                        <input class="form-control" value="100" step="0.01" required="required" type="number" id="amount" name="amount">
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="row justify-content-center">
+                                        <button class="btn btn-primary" type="submit">OK</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+
+$("#sellcurrency").change(function(){
+        var bc = document.getElementById("buycurrency");
+        var sc = document.getElementById("sellcurrency");
+        $.getJSON("/data/buycurrency.json",function(data){
+            $("#buycurrency").empty();
+            $("#buycurrency").append("<option>Buy Currency</option>");
+            for(var key in data[sc.value]){
+                $("#buycurrency").append("<option>"+key+"</option>");
+            }
+        });
+    });
+</script>
+</body>
+</html>

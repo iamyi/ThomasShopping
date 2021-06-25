@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="style/e_bank_style">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bank System | EBank</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script src="/dist/js/plugins/jquery/jquery.min.js"></script>
+
+    <script src="/dist/js/adminlte.min.js"></script>
+    <script src="/dist/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/dist/js/datatables/jquery.dataTables.js"></script>
+    <script src="/dist/js/datatables/dataTables.bootstrap4.js"></script>
+</head>
+<body class="hold-transition">
+<div class="wrapper">
+    <div th:include="style/e_bank_style::content">
+    </div>
+    <div class="content-wrapper">
+        <section class="content-header">
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header no-border">
+                                <p class="card-title">All plans</p>
+                            </div>
+                            <div class="card-body">
+                                <table id="list" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Sell Currency</th>
+                                        <th>Buy Currency</th>
+                                        <th>Trade Amount</th>
+                                        <th>Low Price</th>
+                                        <th>High Price</th>
+                                        <th>Create Time</th>
+                                        <th>More</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr th:each="i : ${index}">
+                                        <td th:text="${type[i]}"></td>
+                                        <td th:text="${sc[i]}"></td>
+                                        <td th:text="${bc[i]}"></td>
+                                        <td th:text="${list.get(i).getAmount()}"></td>
+                                        <td th:text="${list.get(i).getLow_price()}"></td>
+                                        <td th:text="${list.get(i).getHigh_price()}"></td>
+                                        <td th:text="${list.get(i).getCreate_time().toString()}"></td>
+                                        <td>
+                                            <a th:if="${cancelflag[i]}" th:href="@{'/banksystem/e_bank/forex/cancleorder/'+${list.get(i).getCreate_time().toString()}}" class="btn btn-outline-danger">Cancle</a>
+                                            <a th:if="${additionflag[i]}" th:href="@{'/banksystem/e_bank/forex/addition/'+${list.get(i).getCreate_time().toString()}}" class="btn btn-outline-primary">Addition Plan</a>
+                                            <a th:if="${!additionflag[i]&&!lossefficacyflag[i]&&!doneflag[i]}" class="btn btn-outline-warning">already addition</a>
+                                            <a th:if="${lossefficacyflag[i]}" class="btn btn-outline-warning">already loss efficacy</a>
+                                            <a th:if="${doneflag[i]}" class="btn btn-outline-success">already execute</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+
+</script>
+</body>
+</html>

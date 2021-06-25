@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bank Management System | Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script src="/dist/js/plugins/jquery/jquery.min.js"></script>
+    <script src="/dist/js/adminlte.min.js"></script>
+    <script src="/dist/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body >
+<div class="wrapper">
+    <!--<div class="content-wrapper">-->
+    <section class="content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <br>
+                    <div class="alert alert-info alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="icon fa fa-info"></i> Alert!</h5>
+                        Please Remember your new account
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="text-info">Account:<font th:text="${debit_card.getAccount()}"></font></p>
+                            <p class="text-info">Password:<font th:text="${debit_card.getPassword()}"></font></p>
+                            <p class="text-info">Name:<font th:text="${debit_card.getName()}"></font></p>
+                            <p class="text-info">Phone:<font th:text="${debit_card.getPhone()}"></font></p>
+                            <p class="text-info">Address:<font th:text="${debit_card.getAddress().toString()}"></font></p>
+                            <p class="text-info">Open E_bank:<font th:text="${debit_card.isE_bank()}"></font></p>
+                            <p class="text-info">Create Time:<font th:text="${debit_card.getCreate_time()}"></font></p>
+
+                        </div>
+                        <div class="card-footer">
+                            <button id="back"class="btn btn-primary" type="button" onclick="javascript:history.back(-1);">Back To Create</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--</div>-->
+</div>
+</body>
+</html>

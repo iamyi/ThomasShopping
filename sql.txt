@@ -1,0 +1,13 @@
+users(account,password,update_time)
+debit_cards(account,name,id_card,address,phone,password,e_bank,loss,create_time,update_time)
+//借记卡（账号，用户姓名，身份证，地址，手机，密码，是否开通网上银行，挂失，创建时间，更新时间）
+debit_sub_accounts(account,sub_account,money,interest,create_time,update_time)
+//子账户（借记卡账号，子账户账号，本金，利息，创建时间，更新时间）
+debit_sub_transcation(account,sub_account,money,update_time)
+//子账户流水（借记卡账号，子账户账号，交易金额，更新时间）
+interest_rate(rate,type,update_time)
+//利率（利率，类型（定期，活期），更新时间）
+0.0123
+
+
+

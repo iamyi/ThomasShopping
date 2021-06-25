@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="style/manage_style">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bank Management System | Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script src="/dist/js/plugins/jquery/jquery.min.js"></script>
+    <script src="/dist/js/adminlte.min.js"></script>
+    <script src="/dist/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body class="hold-transition">
+<div class="wrapper">
+    <div th:include="style/manage_style::content">
+    </div>
+    <div class="content-wrapper">
+        <section class="content-header"></section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div th:each="forex : ${list}" class="col-md-4">
+                        <div class="card card-info">
+                            <form role="form" method="post"  th:action="@{'/banksystem/manage/forex_rate/set/'+${forex.getCurrency()+forex.getLevel()}}">
+                                <div class="card-header">
+                                    <h3 class="card-title" th:text="@{${forex.getCurrencyString()}+' Level ' + ${forex.getLevel()}}"></h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Rate 1</label>
+                                        <input class="form-control" name="rate1" th:value="${forex.getRate1()}" type="number" step="0.01">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Rate 2</label>
+                                        <input class="form-control" name="rate2" th:value="${forex.getRate2()}" type="number" step="0.01">
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-info" type="submit">Set</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+</html>

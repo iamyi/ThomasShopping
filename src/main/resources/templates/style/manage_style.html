@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bank Management System | Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script src="../../dist/js/plugins/jquery/jquery.min.js"></script>
+
+    <script src="../../dist/js/adminlte.min.js"></script>
+    <script src="../../dist/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body class="hold-transition">
+<div class="wrapper" >
+    <div th:fragment="content">
+        <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="/banksystem/manage/home" class="nav-link">Home</a>
+                </li>
+                <li class="d-none d-sm-inline-block nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" >
+                        Manage Users
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/banksystem/manage/account/create">Create User</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/banksystem/manage/account/edit">Edit Users</a>
+                    </div>
+                </li>
+                <li class="d-none d-sm-inline-block nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" >
+                        Manage Debit Card
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/banksystem/manage/debitcard/create">Create Debit Card</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/banksystem/manage/debitcard/edit">Edit Debit Card</a>
+                    </div>
+                </li>
+                <li class="d-none d-sm-inline-block nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" >
+                        Saving Business
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/banksystem/manage/saving/depositing_drawing">Depositing & Drawing</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/banksystem/manage/saving/transfer">Transfer</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/banksystem/manage/saving/transactions">Transaction Detail Enquiry</a>
+                    </div>
+                </li>
+                <li class="d-none d-sm-inline-block nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" >
+                        Manage Time
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/banksystem/manage/time">Set Time</a>
+                    </div>
+                </li>
+                <li class="d-none d-sm-inline-block nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" >
+                        Set Core Data
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/banksystem/manage/interest_rate">Set Interst Rate</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/banksystem/manage/forex_rate">Set Forex Rate</a>
+                    </div>
+                </li>
+            </ul>
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Notifications Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" th:text="${user.getAccount()}" data-toggle="dropdown" href="#">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="/banksystem/login/manage">Logout</a>
+                        <div class="dropdown-divider"></div>
+
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="#" class="brand-link">
+                Bank Management System
+            </a>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+                             with font-awesome or any other icon font library -->
+                        <li class="nav-item has-treeview menu-open">
+                            <a href="#" class="nav-link">
+                                <p>
+                                    Manage Users
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/banksystem/manage/account/create" class="nav-link">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>Create User</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>Edit User</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview menu-open">
+                            <a href="#" class="nav-link">
+                                <p>
+                                    Manage Debit Card
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/banksystem/manage/debitcard/create" class="nav-link">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>Create Debit Card</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>Edit Debit Card</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview menu-open">
+                            <a href="#" class="nav-link">
+                                <p>
+                                    Saving Business
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/banksystem/manage/saving/depositing_drawing" class="nav-link">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>Depositing & Drawing</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/banksystem/manage/saving/transfer" class="nav-link">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>Transfer</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/banksystem/manage/saving/transactions" class="nav-link">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>Transactions</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview menu-open">
+                            <a href="#" class="nav-link">
+                                <p>
+                                    Manage Time
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/banksystem/manage/time" class="nav-link">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>Set Time</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+    </div>
+</div>
+
+</body>
+</html>

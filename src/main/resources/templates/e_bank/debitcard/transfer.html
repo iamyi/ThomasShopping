@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="style/e_bank_style">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bank System | EBank</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script src="/dist/js/plugins/jquery/jquery.min.js"></script>
+
+    <script src="/dist/js/adminlte.min.js"></script>
+    <script src="/dist/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/dist/js/datatables/jquery.dataTables.js"></script>
+    <script src="/dist/js/datatables/dataTables.bootstrap4.js"></script>
+</head>
+<body class="hold-transition">
+<div class="wrapper">
+    <div th:include="style/e_bank_style::content">
+    </div>
+    <div class="content-wrapper">
+        <section class="content-header">
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div calss="col-md-4">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Frequent Contacts</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body ">
+                                <table id="debitcard" class="table table-bordered table-striped">
+                                    <thead class="table">
+                                        <tr>
+                                            <th>Account</th>
+                                            <th>Name</th>
+                                            <th>more</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="i:${index}">
+                                            <td th:text="${list.get(i).getContact()}"></td>
+                                            <td th:text="${list.get(i).getContactName()}"></td>
+                                            <td>
+                                                <a th:href="@{'/banksystem/ebank/debitcard/chooseFrequentContact/'+${list.get(i).getContact()}+'/'+${list.get(i).getContactName()}}" class="text-muted">
+                                                <i class="fa fa-search"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div th:if="${ts}" class="alert alert-success alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h5><i class="icon fa fa-check"></i> Information!</h5>
+                            <p th:text="${ts}"></p>
+                        </div>
+                        <div class="card card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">Transfer</h3>
+                            </div>
+                            <form action="/banksystem/e_bank/debitcard/transfer" role="form" method="post">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="to">Transfer To Account</label>
+                                        <input required="required" class="form-control" type="text" th:value="${id}" id="to" name="to" oninput="if(value.length>10) value=value.slice(0,10)">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="to_name">Transfer To Name </label>
+                                        <input required="required" class="form-control" type="text" th:value="${name}" id="to_name" name="to_name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="currency">Currency</label>
+                                        <select  id="currency" name="currency" class="form-control">
+                                            <option value="1">CNY</option>
+                                            <option value="2">USD</option>
+                                            <option value="3">HKD</option>
+                                            <option value="4">JPY</option>
+                                            <option value="5">EUR</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="amount">Amount</label>
+                                        <input required="required" class="form-control" step="0.01" id="amount" type="number" name="amount" oninput="if(value.length>10) value=value.slice(0,10)">
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-info" type="submit">Transfer</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+
+</script>
+</body>
+</html>
+
+
+
+

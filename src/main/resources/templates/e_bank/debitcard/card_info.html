@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="style/e_bank_style">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bank System | EBank</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script src="/dist/js/plugins/jquery/jquery.min.js"></script>
+
+    <script src="/dist/js/adminlte.min.js"></script>
+    <script src="/dist/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/dist/js/datatables/jquery.dataTables.js"></script>
+    <script src="/dist/js/datatables/dataTables.bootstrap4.js"></script>
+</head>
+<body class="hold-transition">
+<div class="wrapper">
+    <div th:include="style/e_bank_style::content">
+    </div>
+    <div class="content-wrapper">
+        <section class="content-header">
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <div>
+                            <a th:id="${card.getAccount()}" onclick="changePSD(this)" class="btn btn-outline-primary">change psd</a>
+                            <a th:id="${card.getAccount()}" onclick="repLoss(this)" class="btn btn-outline-warning">report loss</a>
+                        </div>
+                        <p> </p>
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Debit Card Info</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="debitcard" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Account</th>
+                                        <th>Name</th>
+                                        <th>Id</th>
+                                        <th>EBank</th>
+                                        <th>Phone</th>
+                                        <th>CreateTime</th>
+                                        <th>Address</th>
+                                        <th>Loss</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td th:text="${card.getAccount()}"></td>
+                                        <td th:text="${card.getName()}"></td>
+                                        <td th:text="${card.getId_card()}"></td>
+                                        <td th:text="${card.isE_bank()}"></td>
+                                        <td th:text="${card.getPhone()}"></td>
+                                        <td th:text="${card.getCreate_time().toString().substring(0,10)}"></td>
+                                        <td th:text="|${card.getAddress().get('province')},${card.getAddress().get('city')},${card.getAddress().get('area')},${card.getAddress().get('street')}|"></td>
+                                        <td th:text="${card.isLoss()}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <p class="card-title">Sub Account Info</p>
+                            </div>
+                            <div class="card-body">
+                                <table id="subaccountlist" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Account</th>
+                                        <th>Currency</th>
+                                        <th>Amount</th>
+                                        <th>Value Dates</th>
+                                        <th>Deposit Time</th>
+                                        <th>Interest</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="i : ${index}">
+                                        <td th:text="${allSubAccount.get(i).getSub_account()}"></td>
+                                        <td th:text="${currency[i]}"></td>
+                                        <td th:text="${allSubAccount.get(i).getAmount()}"></td>
+                                        <td th:text="${allSubAccount.get(i).getCreate_time().toString().substring(0,10)}"></td>
+                                        <td th:text="${depositTime[i]}"></td>
+                                        <td th:text="${allSubAccount.get(i).getInterest()}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    function repLoss(obj){
+        if(confirm("Are you sure to report loss?"))
+            $.ajax({
+            dataType: "text",
+            url: "/banksystem/manage/debitcard/edit/reportLoss",
+            type: "post",
+            data: "id="+obj.id,
+            success: function(data){
+            alert(data)
+
+            }
+
+            })
+    }
+    function changePSD(obj){
+        var psd=prompt("enter new password:");
+        if(psd!=null)
+            $.ajax({
+            dataType: "text",
+            url: "/banksystem/manage/debitcard/edit/changePSD",
+            type: "post",
+            data: "id="+obj.id+"&psd="+psd,
+            success: function(data){
+            alert(data)
+
+            }
+
+            })
+    }
+</script>
+</body>
+</html>

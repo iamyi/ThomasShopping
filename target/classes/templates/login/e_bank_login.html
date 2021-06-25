@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>E_bank | Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script src="/dist/js/plugins/jquery/jquery.min.js"></script>
+    <script src="/dist/js/adminlte.min.js"></script>
+    <script src="/dist/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <a href="#"><b>E Bank|</b>Login</a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">Sign in to start your session</p>
+
+            <div class="alert alert-warning alert-dismissible" th:if="${error_message} ne 'login' ">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fa fa-warning"></i> Alert!</h5>
+                <font th:text=${error_message}></font>
+            </div>
+            <form role="form" th:action="@{/banksystem/login/e_bank}" method="post">
+                <div class="form-group has-feedback">
+                    <label for="account">Account</label>
+                    <input type="text"  id="account" name="account" class="form-control" placeholder="Enter Account Id">
+                </div>
+                <div class="form-group has-feedback">
+                    <label for="password">Passowrd</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+            <!-- /.social-auth-links -->
+            <p class="mb-1">
+                <a href="#">I forgot my password</a>
+            </p>
+        </div>
+        <!-- /.login-card-body -->
+    </div>
+</div>
+<!-- /.login-box -->
+</body>
+</html>

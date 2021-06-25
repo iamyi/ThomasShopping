@@ -1,0 +1,73 @@
+<nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="/banksystem/manage/home" class="nav-link">Home</a>
+            </li>
+            <li class="d-none d-sm-inline-block nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" >
+                    Manage Users
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/banksystem/manage/account/create">Create User</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Edit Users</a>
+                    <div class="dropdown-divider"></div>
+                </div>
+            </li>
+        </ul>
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+            <!-- Notifications Dropdown Menu -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" th:text="${user.getAccount()}" data-toggle="dropdown" href="#">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item">Logout</a>
+                    <div class="dropdown-divider"></div>
+
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="#" class="brand-link">
+            Bank Management System
+        </a>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
+                         with font-awesome or any other icon font library -->
+                    <li class="nav-item has-treeview menu-open">
+                        <a href="#" class="nav-link">
+                            <p>
+                                Manage Users
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/banksystem/manage/account/create" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>Create User</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./index2.html" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>Edit User</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </aside>

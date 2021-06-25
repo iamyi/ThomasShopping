@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="style/e_bank_style">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bank System | EBank</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="/dist/css/datatables/dataTables.bootstrap4.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script src="/dist/js/plugins/jquery/jquery.min.js"></script>
+
+    <script src="/dist/js/adminlte.min.js"></script>
+    <script src="/dist/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/dist/js/datatables/jquery.dataTables.js"></script>
+    <script src="/dist/js/datatables/dataTables.bootstrap4.js"></script>
+    <script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
+    <script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
+    <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+</head>
+<body class="hold-transition">
+<div class="wrapper">
+    <div th:include="style/e_bank_style::content">
+    </div>
+    <div class="content-wrapper">
+        <section class="content-header">
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-md-11">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h3 class="card-title">Search Criteria</h3>
+                            </div>
+                            <form role="form" action="/banksystem/e_bank/debitcard/transaction" method="post">
+                                <div class="card-body">
+                                    <div class="row form-group">
+                                        <div class="col-4">
+                                            <input class="form-control" placeholder="Sub Account" id="sub_account" name="sub_account" type="number" oninput="if(value.length>10) value=value.slice(0,10)">
+                                        </div>
+                                        <div class="col-4">
+                                            <select class="form-control" id="detail" name="detail">
+                                                <option value="0">Type</option>
+                                                <option value="1">Income</option>
+                                                <option value="2">Expense</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row margin form-group">
+                                        <div class="col-4">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                      <span class="input-group-text">
+                                                            <i class="fa fa-calendar"></i>
+                                                      </span>
+                                                </div>
+                                                <input type="date" class="form-control float-right" id="from_date" name="from_date">
+                                            </div>
+                                        </div>
+                                        <h3> - </h3>
+                                        <div class="col-4">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                      <span class="input-group-text">
+                                                            <i class="fa fa-calendar"></i>
+                                                      </span>
+                                                </div>
+                                                <input type="date" class="form-control float-right" id="to_date" name="to_date">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <button class="btn btn-success btn-block" type="submit">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                    <div calss="col-md-5">
+                        <div id="income" style="min-width:450px;height:450px"></div>
+                    </div>
+                    <div calss="col-md-5">
+                        <div id="outcome" style="min-width:450px;height:450px"></div>
+                    </div>
+                    </div>
+                    <p></p>
+                    <div class="col-md-11">
+                        <div class="card card-info">
+                            <div class="card-body">
+                                <table id="list" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Account</th>
+                                        <th>SubAccount</th>
+                                        <th>Amount</th>
+                                        <th>UpdateTime</th>
+                                        <th>Detail</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="prod : ${list}">
+                                        <td th:text="${prod.getAccount()}"></td>
+                                        <td th:text="${prod.getSub_account()}"></td>
+                                        <td th:text="${prod.getAmount()}"></td>
+                                        <td th:text="${prod.getRealUpdate_time()}"></td>
+                                        <td th:text="${prod.getDetail()}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+
+     $(function () {
+         $('#list').DataTable();
+         $.ajax({
+            type:"get",
+            url:"/banksystem/e_bank/debitcard/getallincome",
+            dataType:"json",
+            success:function(data){
+                var income_array = new Array();
+                for(var key in data){
+                    income_array.push(new Array(key,data[key]));
+                }
+                var chart = Highcharts.chart('income', {
+                    title: {
+                        text: 'Income'
+                    },
+                    tooltip: {
+                        headerFormat: '{series.name}<br>',
+                        pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,  // 可以被选择
+                            cursor: 'pointer',       // 鼠标样式
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: ' ',
+                        data: income_array,
+                    }]
+                });
+            }
+          });
+
+          $.ajax({
+            type:"get",
+            url:"/banksystem/e_bank/debitcard/getalloutcome",
+            dataType:"json",
+            success:function(data){
+                var outcome_array = new Array();
+                for(var key in data){
+                    outcome_array.push(new Array(key,data[key]));
+                }
+                var chart = Highcharts.chart('outcome', {
+                    title: {
+                        text: 'Outcome'
+                    },
+                    tooltip: {
+                        headerFormat: '{series.name}<br>',
+                        pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,  // 可以被选择
+                            cursor: 'pointer',       // 鼠标样式
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: ' ',
+                        data: outcome_array,
+                    }]
+                });
+            }
+          });
+    });
+
+
+
+
+
+</script>
+</body>
+</html>

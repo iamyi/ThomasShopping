@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="style/manage_style">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bank Management System | Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script src="/dist/js/plugins/jquery/jquery.min.js"></script>
+
+    <script src="/dist/js/adminlte.min.js"></script>
+    <script src="/dist/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/dist/js/datatables/jquery.dataTables.js"></script>
+    <script src="/dist/js/datatables/dataTables.bootstrap4.js"></script>
+</head>
+<body class="hold-transition">
+<div class="wrapper">
+    <div th:include="style/manage_style::content">
+    </div>
+    <div class="content-wrapper">
+        <section class="content-header">
+        </section>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header no-border">
+                                <h3 class="card-title">UserList</h3>
+                            </div>
+                            <div class="card-body">
+                                <table id="list" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Account</th>
+                                        <th>Name</th>
+                                        <th>Remark</th>
+                                        <th>Operation</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="userunit : ${allUser}">
+                                        <td th:text="${userunit.getAccount()}"></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <button th:id="${userunit.getAccount()}" onclick="edit(this)" type="button" class="btn btn-outline-primary">change password</button>
+                                            <button th:id="${userunit.getAccount()}" onclick="del(this)" type="button" class="btn btn-outline-danger">delete account</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <script>
+                                        function edit(obj){
+                                            var psd=prompt("enter new password:");
+                                            if(psd!=null)
+                                                $.ajax({
+                                                dataType: "text",
+                                                url: "/banksystem/manage/account/editPsd",
+                                                type: "post",
+                                                data: "id="+obj.id+"&psd="+psd,
+                                                success: function(data){
+                                                alert(data)
+
+                                                }
+
+                                                })
+                                        }
+                                        function del(obj){
+                                            if(confirm("Are you sure to delete the account?")){
+                                                $.ajax({
+                                                dataType: "text",
+                                                url: "/banksystem/manage/account/delAccount",
+                                                type: "post",
+                                                data: "id="+obj.id,
+                                                success: function(data){
+                                                alert(data);
+                                                location.reload()
+                                                }
+
+                                                })
+                                            }
+                                        }
+                                    </script>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+  $(function () {
+        $('#list').DataTable();
+    });
+
+</script>
+</body>
+</html>
